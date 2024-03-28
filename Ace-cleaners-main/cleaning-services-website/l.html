@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="s.css" />
+    <script src="script.js"></script>
+
+   
+</head>
+<body>
+    <div class="group">
+        <h1>Password Strength Checker</h1>
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Type your password here" />
+        <label for="">Strength of password</label>
+        <div class="power-container">
+            <div id="power-point"></div>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        document.getElementById('password').addEventListener('input', function() {
+            var password = this.value;
+            var strength = 0;
+        
+            // Check password length
+            if (password.length >= 8) strength++;
+        
+            // Check for uppercase letters
+            if (/[A-Z]/.test(password)) strength++;
+        
+            // Check for lowercase letters
+            if (/[a-z]/.test(password)) strength++;
+        
+            // Check for numbers
+            if (/\d/.test(password)) strength++;
+        
+            // Check for special characters
+            if (/[^a-zA-Z\d]/.test(password)) strength++;
+        
+            // Update the strength indicator
+            var powerPoint = document.getElementById('power-point');
+            powerPoint.style.width = (strength * 25) + '%';
+        });
+        </script>
+
+
+
+</body>
+</html>
