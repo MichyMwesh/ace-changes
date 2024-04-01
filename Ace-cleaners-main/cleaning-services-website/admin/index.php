@@ -120,7 +120,7 @@
                 // Handle success response
                 alert("Order confirmed successfully!");
                 window.location.reload();
-                location.replace('../../');
+                location.replace('../../index.php?amount=<?php echo $numberOfServices?>');
                 // Reload the cart drawer or update its content
             },
             error: function(xhr, status, error) {
@@ -297,8 +297,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <input type="text" id="lat" name="lat">
-                                        <input type="text" id="long" name="long">
+                                        <input type="text" id="lat" name="lat" hidden>
+                                        <input type="text" id="long" name="long" hidden>
                                         <div class="control-group">
                                             <select class="custom-select" name="region">
                                                                                                 
@@ -373,8 +373,10 @@
                                                               <div>
                     
                                             <button class="control-group btn btn-warning" type="submit" name="submit">SUBMIT</button>
-                                        </div>
-
+                                        </div><br>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bookingsModal">
+    View Bookings
+</button>
                                         <div class="my-5">
                                             <div class="bg-success text-light py-3 px-5" style="cursor: pointer" onclick="openLocationModal()">Click to enable location</div>
 
@@ -576,6 +578,7 @@
                                     <div class="price-action">
                                         <button type="submit"><i class="fa fa-shopping-cart"></i>BOOK</button>
                                     </div>
+                            
                                 </div>
                             </div>
                         </div>
@@ -652,6 +655,7 @@
                     </div>
                 </div>
             </div>
+            
             <!-- Footer End -->
             
             <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
@@ -668,4 +672,76 @@
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
     </body>
+    <div class="modal" id="bookingsModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Bookings</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>                    
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Database connection parameters
+                        include("dconn.php"); // Include your database connection file
+
+                        // SQL query to fetch data from the bookings table
+                        $sql = "SELECT id, uemail, number, region, lat, longVal, tuesday_time, monday_time, wednesday_time, thursday_time, friday_time, saturday_time, sunday_time,created_at FROM cart";
+
+                        $result = $conne->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            // Output data of each row
+                            while($row = $result->fetch_assoc()) {
+                                echo "<tr>";
+                                if($row["tuesday_time"]!="00:00:00")
+                                {
+                                    echo "<td>Tuesday".$row["tuesday_time"]."</td><td>Date:".$row['created_at']."</td>";
+                                }
+                                if($row["wednesday_time"]!="00:00:00")
+                                {
+                                    echo "<td>Wednesday:&npsb".$row["wednesday_time"]."</td><td>".$row['created_at']."</td>";
+                                }
+                                if($row["thursday_time"]!="00:00:00")
+                                {
+                                    echo "<td>Thursday".$row["thursday_time"]."</td><td>Date:".$row['created_at']."</td>";
+                                }
+                                if($row["friday_time"]!="00:00:00")
+                                {
+                                    echo "<td>Friday".$row["friday_time"]."</td><td>Date:".$row['created_at']."</td>";
+                                }
+                                if($row["saturday_time"]!="00:00:00")
+                                {
+                                    echo "<td>Saturday".$row["saturday_time"]."</td><td>Date:".$row['created_at']."</td>";
+                                }
+                                if($row["sunday_time"]!="00:00:00")
+                                {
+                                    echo "<td>Sunday&nbsp:".$row["sunday_time"]."</td><td>Date:".$row['created_at']."</td>";
+                                }
+                                
+                                
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='13'>0 results</td></tr>";
+                        }
+
+                        // Close connection
+                        $conne->close();
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 </html>

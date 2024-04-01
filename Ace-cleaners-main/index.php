@@ -90,8 +90,8 @@ session_start();
                           <!--bs5 input-->
 
               <?php
-              if (isset($_SESSION['amount'])) {
-                  $amount = $_SESSION['amount'];
+              if (isset($_GET['amount'])) {
+                  $amount = $_GET['amount'];
               }
               ?>
 
