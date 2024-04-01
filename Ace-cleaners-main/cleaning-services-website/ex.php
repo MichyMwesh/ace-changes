@@ -94,7 +94,8 @@ $exists = false;
 
 if (isset($_POST['signup'])) {
     include 'dbconnect.php';
-
+    $email = mysqli_real_escape_string($conn, $_POST["email"]);
+    echo $email;
     $username = mysqli_real_escape_string($conn, $_POST["username"]);
     $password = mysqli_real_escape_string($conn, $_POST["password"]);
     $cpassword = mysqli_real_escape_string($conn, $_POST["cpassword"]);
@@ -111,7 +112,7 @@ if (isset($_POST['signup'])) {
 
         if ($num == 0) {
             $hash = password_hash($password, PASSWORD_DEFAULT);
-            $insertSql = "INSERT INTO `users` (`username`, `password`, `cpassword`,`date`) VALUES ('$username', '$hash','$cpassword',current_timestamp())";
+            $insertSql = "INSERT INTO `users` (`email`,`username`, `password`, `cpassword`,`date`) VALUES ('$email','$username', '$hash','$cpassword',current_timestamp())";
             $insertResult = mysqli_query($conn, $insertSql);
 
             if ($insertResult) {

@@ -297,34 +297,36 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
+                                        <input type="text" id="lat" name="lat">
+                                        <input type="text" id="long" name="long">
                                         <div class="control-group">
                                             <select class="custom-select" name="region">
-                                                <option required>Choose A Region</option>
-                                                <option value="Nairobi">Buruburu</option>
-                                                <option value="Kajiado">Donholm</option>
-                                                <option value="Kiambu">Eastlands</option>
-                                                <option value="Eastleigh">Eastleigh</option>
-                                                <option value="Imara Daima">Imara Daima</option>
-                                                <option value="Juja">Juja</option>
-                                                <option value="Kabete">Kabete</option>
-                                                <option value="Kahawa">Kahawa</option>
-                                                <option value="Kamukunji">Kamukunji</option>
-                                                <option value="Kangemi">Kangemi</option>
-                                                <option value="Karen">Karen</option>
-                                                <option value="Kasarani">Kasarani</option>
-                                                <option value="Kawangware">Kawangware</option>
-                                                <option value="Kikuyu">Kikuyu</option>
-                                                <option value="Kileleshwa">Kileleshwa</option>
-                                                <option value="Kilimani">Kilimani</option>
-                                                <option value="Kitengela">Kitengela</option>
-                                                <option value="Rongai">Rongai</option>
-                                                <option value="Komarock">Komarock</option>
-                                                <option value="Ngong">Ngong</option>
-                                                <option value="Langata">Langata</option>
-                                                <option value="Westlands">Westlands</option>
-                                            </select>
+                                                                                                
+                                                    <option required>Choose A Region</option>
+                                                    <option value="36.8770,-1.2946">Buruburu</option>
+                                                    <option value="36.8913,-1.3007">Donholm</option>
+                                                    <option value="36.8862,-1.2796">Eastlands</option>
+                                                    <option value="36.8511,-1.2717">Eastleigh</option>
+                                                    <option value="36.8978,-1.3354">Imara Daima</option>
+                                                    <option value="37.0154,-1.1023">Juja</option>
+                                                    <option value="36.7351,-1.2424">Kabete</option>
+                                                    <option value="36.9409,-1.1840">Kahawa</option>
+                                                    <option value="36.8396,-1.2790">Kamukunji</option>
+                                                    <option value="36.7571,-1.2666">Kangemi</option>
+                                                    <option value="36.7105,-1.3297">Karen</option>
+                                                    <option value="36.8932,-1.2208">Kasarani</option>
+                                                    <option value="36.7409,-1.2914">Kawangware</option>
+                                                    <option value="36.6864,-1.2544">Kikuyu</option>
+                                                    <option value="36.7658,-1.2881">Kileleshwa</option>
+                                                    <option value="36.7845,-1.2920">Kilimani</option>
+                                                    <option value="36.9631,-1.4846">Kitengela</option>
+                                                    <option value="36.7563,-1.3926">Rongai</option>
+                                                    <option value="36.9145,-1.2710">Komarock</option>
+                                                    <option value="36.6593,-1.3580">Ngong</option>
+                                                    <option value="36.7446,-1.3689">Langata</option>
+                                                    <option value="36.8073,-1.2635">Westlands</option>
+                                                </select>
+
                                         </div>
 
                                         <!-- HTML -->
@@ -368,68 +370,7 @@
 
 
                                         <!-- HTML -->
-                                        <div class="control-group mb-3">
-                                            <div class="dropdown">
-                                                <button class="btn btn-secondary dropdown-toggle  text-light w-100" style="background-color: #FFFFFF33; text-align: left; color: white" type="button" id="roomDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Choose Room Type & Number
-                                                </button>
-                                                <div class="dropdown-menu w-100 bg-primary text-light" aria-labelledby="roomDropdown" style="box-shadow: 10px 10px 10px 10px gray">
-                                                    <div class="dropdown-item">
-                                                        <label for="bedroomCheckbox">Bedroom</label>
-                                                        <input type="checkbox" id="bedroomCheckbox" name="roomType[]" value="Bedroom">
-
-                                                        <select name="bedroomCount" class="form-control" multiple>
-
-                                                            <option value="1">1</option>
-                                                            <option value="2">2</option>
-                                                            <option value="3">3</option>
-                                                            <option value="4">4</option>
-                                                            <option value="5">5</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="dropdown-item">
-                                                        <label for="livingroomCheckbox">Living Room</label>
-                                                        <input type="checkbox" id="livingroomCheckbox" name="roomType[]" value="Living Room">
-                                                        <select name="livingroomCount" class="form-control" multiple>
-                                                            <option value="1" >1</option>
-                                                            <option value="2" >2</option>
-                                                            <option value="3" >3</option>
-                                                            <option value="4" >4</option>
-                                                            <option value="5" >5</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="dropdown-item">
-                                                        <label for="bathroomCheckbox">Bathroom</label>
-                                                        <input type="checkbox" id="bathroomCheckbox" name="roomType[]" value="Bathroom">
-                                                        <select name="bathroomCount" class="form-control" multiple>
-                                                            <option value="1">1</option>
-                                                            <option value="2">2</option>
-                                                            <option value="3">3</option>
-                                                            <option value="4">4</option>
-                                                            <option value="5">5</option>
-                                                            <option value="5">6</option>
-                                                            <option value="5">7</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="dropdown-item">
-                                                        <label for="kitchenCheckbox">Kitchen</label>
-                                                        <input type="checkbox" id="kitchenCheckbox" name="roomType[]" value="Kitchen">
-                                                        <select name="kitchenCount" class="form-control" multiple>
-                                                            <option value="1">1</option>
-                                                            <option value="2">2</option>
-                                                            <option value="3">3</option>
-                                                            <option value="4">4</option>
-                                                            <option value="5">5</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                        
-
-
-                                        <div>
+                                                              <div>
                     
                                             <button class="control-group btn btn-warning" type="submit" name="submit">SUBMIT</button>
                                         </div>
@@ -450,9 +391,10 @@
                                                     
                                                     <!-- Modal body -->
                                                     <div class="modal-body">
-                                                        <p>Choose how to proceed with location:</p>
+                                                        <p style="color:black">Choose how to proceed with location:
+                                                            Note: Location should be opened at the location of the cleaning scene.
+                                                        </p>
                                                         <button type="button" class="btn btn-primary" onclick="enableLocation()">Open Location</button>
-                                                        <button type="button" class="btn btn-success text-light" onclick="viewLocationOnMap()" style="background-color: green">View on Map</button>
                                                     </div>
                                                     
                                                     </div>
@@ -514,6 +456,8 @@
 
                 function showPosition(position) {
                     // Position object contains latitude and longitude
+                    document.getElementById("lat").value=position.coords.latitude;
+                    document.getElementById("long").value=position.coords.longitude;
                     alert("Latitude: " + position.coords.latitude + "\nLongitude: " + position.coords.longitude);
                 }
 
@@ -630,13 +574,14 @@
                                 </div>
                                 <div class="price-footer">
                                     <div class="price-action">
-                                        <a href=""><i class="fa fa-shopping-cart"></i>BOOK</a>
+                                        <button type="submit"><i class="fa fa-shopping-cart"></i>BOOK</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </form>
             </div>
             <!-- Pricing Plan End -->
 <

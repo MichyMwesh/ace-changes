@@ -15,8 +15,7 @@ $PartyA = $phone;
 $PartyB = '254708374149';
 $AccountReference = 'UMESKIA SOFTWARES';
 $TransactionDesc = 'stkpush test';
-$Amount = $money;
-
+$Amount =1000;
 // TIMESTAMP
 $Timestamp = date('YmdHis');
 date_default_timezone_set('Africa/Nairobi');
@@ -35,7 +34,7 @@ curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode([
     'Password' => $Password,
     'Timestamp' => $Timestamp,
     'TransactionType' => 'CustomerPayBillOnline',
-    'Amount' => $Amount,
+    'Amount' => 1,
     'PartyA' => $PartyA,
     'PartyB' => $BusinessShortCode,
     'PhoneNumber' => $PartyA,
@@ -54,7 +53,13 @@ $ResponseCode = $data->ResponseCode;
 
 // ECHO RESPONSE
 if ($ResponseCode == "0") {
-    echo "The CheckoutRequestID for this transaction is: " . $CheckoutRequestID;
+    include_once("mail.php");
+    ?>
+    <script>
+        alert("Submitted for progressing...");
+        location.replace("mail.php")
+    </script>
+    <?php
 } else {
     echo "Error: " . $ResponseCode . " - " . $data->errorMessage;
 }

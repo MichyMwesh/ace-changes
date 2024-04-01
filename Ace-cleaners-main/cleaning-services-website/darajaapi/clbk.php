@@ -1,4 +1,14 @@
 <?php
+// Allow requests from specific origins
+header('Access-Control-Allow-Origin:*');
+// You can specify multiple origins separated by commas:
+// header('Access-Control-Allow-Origin: https://example.com, https://subdomain.example.com');
+
+// Allow specific methods (e.g., POST)
+header('Access-Control-Allow-Methods: POST');
+
+// Allow specific headers (e.g., Content-Type)
+header('Access-Control-Allow-Headers: Content-Type');
 
 // INCLUDE THE DATABASE CONNECTION FILE
 include 'dbcon.php';

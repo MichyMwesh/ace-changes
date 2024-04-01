@@ -1,29 +1,27 @@
-<!-- <div id='storemapper' style='width:100%;'>
-    <p>Store Locator is loading from <a href='https://www.storemapper.co'>Storemapper</a>...</p>
-  </div>
-  <script data-storemapper-start='2024,03,25'
-          data-storemapper-id='25062-H0edSYzIiCWE7zJ7'>
-          (function() {var script = document.createElement('script');
-            script.type  = 'text/javascript';script.async = true;
-            script.src = 'https://www.storemapper.co/js/widget-3.min.js';
-            var entry = document.getElementsByTagName('script')[0];
-            entry.parentNode.insertBefore(script, entry);}
-          ());
-  </script>
-   -->
-
-
-   <?php 
+<?php 
 // Include the database configuration file 
-require_once 'cn.php'; 
- 
-// Fetch the marker info from the database 
-$result = $corn->query("SELECT * FROM locations"); 
- 
-// Fetch the info-window data from the database 
-$result2 = $corn->query("SELECT * FROM locations"); 
-?>
+include "dconn.php";
 
+// Fetch the marker info and info window content from the database 
+$result = $conne->query("SELECT * FROM cart"); 
+$markers = [];
+$infoWindowContent = [];
+$regions=[];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $lat = $row['lat'];
+        $longVal = $row['longVal'];
+        $phoneNumber = $row['number'];
+        $markers[] = array($lat, $longVal, $phoneNumber);
+       $regions[]=array($row['region'],$row['number']);
+        // Prepare data for info window content
+        $infoWindowContent[] = '<div class="info_content">' .
+            '<h3>Client</h3>' .
+            '<p>This is a client</p>' .
+            '</div>';
+    }
+}
+?>
    <!DOCTYPE html>
 <html>
 <head>
@@ -39,21 +37,22 @@ body { margin: 0; padding: 0; }
 </head>
 <body>
 <div id="map">
-    <button>SELECT LOCATION</button>
+   
 </div>
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoibGVzdG9ub3NvaSIsImEiOiJjbHU2d2Nsd24yNHk1Mm1wZDh0M2hqOHRuIn0.TMrQ_iTkYo9jbEg8qN50_Q';
+var markers = <?php echo json_encode($markers); ?>; 
+var markersRegions = <?php echo json_encode($regions); ?>;
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
         const lng = position.coords.longitude;
         const lat = position.coords.latitude;
-
         // Create a new map instance centered on the user's location
         const map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/mapbox/streets-v12',
             center: [lng, lat], // Set the map's center to the user's location
-            zoom: 14 // Adjust the zoom level as needed
+            zoom: 5 // Adjust the zoom level as needed
         });
 
         // Add geolocate control to the map
@@ -66,6 +65,46 @@ if (navigator.geolocation) {
                 showUserHeading: true
             })
         );
+
+        // Add markers to the map
+        markers.forEach(marker => {
+            // Extract latitude, longitude, and phone number from the marker array
+            const lat = marker[0];
+            const lng = marker[1];
+            const phoneNumber = marker[2];
+            // Create a marker at the specified coordinates with custom icon
+            const newMarker = new mapboxgl.Marker({
+                color: "red",
+                scale: 0.7,
+                rotation: 45,
+                anchor: 'bottom'
+            })
+                .setLngLat([lng, lat])
+                .setPopup(new mapboxgl.Popup().setHTML('<h3>Client Live Location</h3><h3>Phone Number: ' + phoneNumber + '</h3>')).addTo(map)
+                .getElement()
+            .addEventListener('click', function() {
+                // Do something when the marker is clicked
+                //alert('Marker clicked! Phone Number: ' + phoneNumber);
+            });;
+        });
+        markersRegions.forEach(latlong => {
+    // Extract latitude and phone number from the marker array
+    var ltlng=latlong[0].split(",");
+    const lng = ltlng[0];
+    const lat=ltlng[1]
+    const phoneNumber = latlong[1];
+    alert(lat);
+    // Create a marker at the specified latitude with custom icon and click event listener
+    const newMarker = new mapboxgl.Marker()
+        .setLngLat([lng,lat]) // Assuming you want to set longitude to 0
+        .setPopup(new mapboxgl.Popup().setHTML('<h3>Client Region</h3><h3>Phone Number: ' + phoneNumber + '</h3>')) // Popup content
+        .addTo(map);
+});
+
+        // Add marker for user's location
+        /*new mapboxgl.Marker()
+            .setLngLat([lng, lat])
+            .addTo(map);*/
     });
 } else {
     // Handle the case where geolocation is not supported
@@ -75,58 +114,39 @@ if (navigator.geolocation) {
 
 <script src="https://maps.googleapis.com/maps/api/js?key=pk.eyJ1IjoibGVzdG9ub3NvaSIsImEiOiJjbHU2d2Nsd24yNHk1Mm1wZDh0M2hqOHRuIn0.TMrQ_iTkYo9jbEg8qN50_Q"></script>
 
+
 <script>
+    
 function initMap() {
     var map;
     var bounds = new google.maps.LatLngBounds();
     var mapOptions = {
         mapTypeId: 'roadmap'
     };
-                    
     // Display a map on the web page
     map = new google.maps.Map(document.getElementById("mapCanvas"), mapOptions);
     map.setTilt(100);
         
     // Multiple markers location, latitude, and longitude
-    var markers = [
-        <?php if($result->num_rows > 0){ 
-            while($row = $result->fetch_assoc()){ 
-                echo '["'.$row['name'].'", '.$row['latitude'].', '.$row['longitude'].', "'.$row['icon'].'"],'; 
-            } 
-        } 
-        ?>
-    ];
-                        
-    // Info window content
-    var infoWindowContent = [
-        <?php if($result2->num_rows > 0){ 
-            while($row = $result2->fetch_assoc()){ ?>
-                ['<div class="info_content">' +
-                '<h3><?php echo $row['name']; ?></h3>' +
-                '<p><?php echo $row['info']; ?></p>' + '</div>'],
-        <?php } 
-        } 
-        ?>
-    ];
-        
-    // Add multiple markers to map
+    var markers = <?php echo json_decode($markers); ?>;
+    var infoWindowContent = <?php echo json_encode($infoWindowContent); ?>;
+          // Add multiple markers to map
     var infoWindow = new google.maps.InfoWindow(), marker, i;
     
     // Place each marker on the map  
     for( i = 0; i < markers.length; i++ ) {
-        var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+        var position = new google.maps.LatLng(markers[i][1]);
         bounds.extend(position);
         marker = new google.maps.Marker({
             position: position,
             map: map,
-			icon: markers[i][3],
             title: markers[i][0]
         });
         
         // Add info window to marker    
         google.maps.event.addListener(marker, 'click', (function(marker, i) {
             return function() {
-                infoWindow.setContent(infoWindowContent[i][0]);
+                infoWindow.setContent(infoWindowContent[i]);
                 infoWindow.open(map, marker);
             }
         })(marker, i));
@@ -145,7 +165,6 @@ function initMap() {
 // Load initialize function
 google.maps.event.addDomListener(window, 'load', initMap);
 </script>
-
 
 
 </body>

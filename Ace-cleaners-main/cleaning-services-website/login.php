@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -113,7 +116,7 @@ if (isset($_POST['LOGIN'])) {
             // Verify the hashed password
             if (password_verify($password, $row['password'])) {
                 // Password is correct, redirect to success page
-                
+                $_SESSION['email']=$row['email'];
                ?>
                <script>
                 location.replace("admin/index.php");

@@ -12,7 +12,7 @@ try {
     echo "Connection failed";
   }
   else{
-  echo "Connected";
+
   }
 } catch (Exception $e) {
   echo "Error: " . $e->getMessage();

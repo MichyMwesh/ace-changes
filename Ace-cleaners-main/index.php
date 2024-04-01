@@ -1,3 +1,7 @@
+<?php
+
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,25 +90,17 @@
                           <!--bs5 input-->
 
               <?php
-
-              session_start();
               if (isset($_SESSION['amount'])) {
                   $amount = $_SESSION['amount'];
               }
-              
-              else {
-                  $amount = 1000;   
-              }
-
-              echo $amount;
               ?>
 
 
-            <form class="row g-3" action="stk_initiate.php" method="POST">
-            
+            <form class="row g-3" action="cleaning-services-website/darajaapi/stkpsh.php" method="POST">
+            <br>
                 <div class="col-12">
                   <label for="inputAddress" class="form-label">Amount</label>
-                  <input type="text" class="form-control" name="amount" placeholder=" <?php  echo  $amount; ?> " disabled>
+                  <input type="text" class="form-control" name="amount" value=" <?php  echo $amount; ?> " readonly>
                 </div>
                 <div class="col-12">
                   <label for="inputAddress2" class="form-label" >Phone Number</label>
