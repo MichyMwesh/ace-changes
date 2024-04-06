@@ -120,7 +120,7 @@
                 // Handle success response
                 alert("Order confirmed successfully!");
                 window.location.reload();
-                location.replace('../../index.php?amount=<?php echo $numberOfServices?>');
+                location.replace('../../index.php?amount=<?php echo $numberOfServices?>&&orderid='+orderId);
                 // Reload the cart drawer or update its content
             },
             error: function(xhr, status, error) {

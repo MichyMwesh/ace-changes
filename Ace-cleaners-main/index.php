@@ -90,14 +90,18 @@ session_start();
                           <!--bs5 input-->
 
               <?php
-              if (isset($_GET['amount'])) {
-                  $amount = $_GET['amount'];
-              }
+      
+              $amount = $_GET['amount'];
+              $orderid=$_GET['orderid'];
               ?>
 
 
             <form class="row g-3" action="cleaning-services-website/darajaapi/stkpsh.php" method="POST">
             <br>
+                <div class="col-12">
+                  <label for="inputAddress" class="form-label">Order Id</label>
+                  <input type="text" class="form-control" name="orderid" value=" <?php  echo $orderid; ?> " readonly>
+                </div>
                 <div class="col-12">
                   <label for="inputAddress" class="form-label">Amount</label>
                   <input type="text" class="form-control" name="amount" value=" <?php  echo $amount; ?> " readonly>
