@@ -2,7 +2,14 @@
 if(isset($_POST['submit'])){
 // INCLUDE THE ACCESS TOKEN FILE
 include 'accessToken.php';
-include 'dbcon.php'; // Ensure this file includes your database connection details
+define('DB_SERVER', 'localhost');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '');
+define('DB_NAME', 'geeks');
+
+  $db = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+ 
+// Ensure this file includes your database connection details
 
 // CONSTANTS
 $processrequestUrl = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
@@ -11,6 +18,7 @@ $passkey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
 $BusinessShortCode = '174379';
 $phone = $_POST['phone']; // phone number to receive the stk push
 $money = $_POST['amount']; 
+$orderid=$_POST['orderid'];
 $PartyA = $phone;
 $PartyB = '254708374149';
 $AccountReference = 'UMESKIA SOFTWARES';
@@ -53,7 +61,12 @@ $ResponseCode = $data->ResponseCode;
 
 // ECHO RESPONSE
 if ($ResponseCode == "0") {
-    include_once("mail.php");
+    $sql="update cart set status='confirmed' where id=$orderid";
+    $query=mysqli_query($db,$sql);
+    if(!$query)
+    {
+        echo mysqli_error($db);
+    }
     ?>
     <script>
         alert("Submitted for progressing...");

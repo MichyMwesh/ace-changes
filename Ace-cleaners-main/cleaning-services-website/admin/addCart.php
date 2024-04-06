@@ -47,6 +47,6 @@ session_start();
     
     // Redirect to index.php
     //header("Location: index.php");
-    echo "<script>location.replace('/ace-changes/Ace-cleaners-main/index.php');</script>";
+    echo "<script>location.replace('index.php');</script>";
     exit(); // Ensure script stops here
 ?>
