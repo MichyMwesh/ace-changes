@@ -152,7 +152,7 @@
 
         <div class="wrapper">
             <!-- Header Start -->
-            <div class="header bg-primary">
+            <div class="header bg-info">
                 <div class="container-fluid">
                     <div class="header-top row align-items-center">
                         <div class="col-lg-3">
@@ -239,9 +239,9 @@
                     <div class="hero row align-items-center">
                         <div class="col-md-7"> 
 
-                        <h2 class="text-warning">BEST & AFFORDABLE</h2>
+                        <h2 class="text-body">BEST & AFFORDABLE</h2>
                             <h2 class="text-dark">
-                                <span class="text-warning">CLEANING SERVICES</span> 
+                                <span class="text-body">CLEANING SERVICES</span> 
                             </h2>
                             
                       
@@ -263,10 +263,10 @@
                                         <input class="form-control" type="email" name="email" placeholder="Email" required>
                                 
                                         -->
-                                        <input class="form-control text-light" type="text" name="slots" id="mobileNumslotsber" value="Available Slots: 10" disabled>    
-                                        <input class="form-control" type="tel" min="1" max="10" maxlength="10" name="number" id="mobileNumber" placeholder="07/01..." required>    
+                                       
+                                        <input class="form-control" type="tel" min="1" max="10" maxlength="10" name="number" id="mobileNumber" placeholder="07..." required>    
                                         <div id="mobileNumberError" class="text-danger"></div>       
-                                        <input class="form-control text-light" type="date" name="calendar" id="calender"  min="2024-03-27" required> 
+                                        <input class="form-control text-light" type="date" name="calendar" id="calendar"  min="2024-04-02" required> 
                                         <script>
                                             var today = new Date().toISOString().split('T')[0];
                                             document.getElementById('calendar').setAttribute("min", today);
@@ -325,15 +325,27 @@
                                                     <option value="36.6593,-1.3580">Ngong</option>
                                                     <option value="36.7446,-1.3689">Langata</option>
                                                     <option value="36.8073,-1.2635">Westlands</option>
+                                                    <option value="37.0834,-1.0388">Thika</option>
+                                                    <option value="36.9001,-1.2132">Thika Road</option>
+                                                    <option value="36.7032,-1.2735">Uthiru</option>
+                                                    <option value="36.9313,-1.0425">Kenyatta Road</option>
+                                                    <option value="36.8398, -1.2664">Pangani</option>
                                                 </select>
-
                                         </div>
+
+
+                                        
+
+                                     <!-- HTML -->
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bookingsModal">
+    View Bookings Made Already By Clients
+</button>
 
                                         <!-- HTML -->
                                         <div class="control-group">
                                             <div class="dropdown ">
                                                 <button class="btn btn-secondary dropdown-toggle w-100 mb-3" style="background-color: #FFFFFF33; text-align: left; color: white"  type="button" id="scheduleDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Choose A Schedule
+                                                    Choose A Schedule At9am To5pm
                                                 </button>
                                                 <div class="dropdown-menu w-100 bg-primary text-light" aria-labelledby="scheduleDropdown" style="box-shadow: 10px 10px 10px 10px gray">
                                                     <div class="dropdown-item">
@@ -369,17 +381,17 @@
                                         </div>
 
 
+
+                                        <div class="">
+                    <button class="control-group btn btn-warning" type="submit" name="submit">SUBMIT</button>
+                </div><br>
                                         <!-- HTML -->
-                                                              <div>
-                    
-                                            <button class="control-group btn btn-warning" type="submit" name="submit">SUBMIT</button>
-                                        </div><br>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bookingsModal">
-    View Bookings
-</button>
+                                       
                                         <div class="my-5">
                                             <div class="bg-success text-light py-3 px-5" style="cursor: pointer" onclick="openLocationModal()">Click to enable location</div>
 
+
+                                           
                                             <!-- Modal -->
                                             <div class="modal" id="locationModal">
                                                 <div class="modal-dialog">
@@ -399,6 +411,9 @@
                                                         <button type="button" class="btn btn-primary" onclick="enableLocation()">Open Location</button>
                                                     </div>
                                                     
+                                                    
+
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -708,7 +723,7 @@
                                 }
                                 if($row["wednesday_time"]!="00:00:00")
                                 {
-                                    echo "<td>Wednesday:&npsb".$row["wednesday_time"]."</td><td>".$row['created_at']."</td>";
+                                    echo "<td>Wednesday".$row["wednesday_time"]."</td><td>Date:".$row['created_at']."</td>";
                                 }
                                 if($row["thursday_time"]!="00:00:00")
                                 {
@@ -724,7 +739,7 @@
                                 }
                                 if($row["sunday_time"]!="00:00:00")
                                 {
-                                    echo "<td>Sunday&nbsp:".$row["sunday_time"]."</td><td>Date:".$row['created_at']."</td>";
+                                    echo "<td>Sunday".$row["sunday_time"]."</td><td>Date:".$row['created_at']."</td>";
                                 }
                                 
                                 

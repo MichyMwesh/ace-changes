@@ -118,18 +118,26 @@ if (isset($_POST['LOGIN'])) {
                 // Password is correct, redirect to success page
                 $_SESSION['email']=$row['email'];
                ?>
+
                <script>
+                 alert("Login Was Successfull!");
                 location.replace("admin/index.php");
                 </script>
                <?php
                 exit();
-            } else {
+            } 
+            else
+             {
+                
                 echo "Incorrect password";
             }
-        } else {
+        } 
+        else
+         {
             echo "User not found";
         }
-    } else {
+    } 
+    else {
         echo "Error preparing statement: " . mysqli_error($conni);
     }
 

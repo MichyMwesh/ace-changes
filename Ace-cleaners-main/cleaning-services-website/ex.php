@@ -64,7 +64,7 @@
                 </div>
                 <nav class="navbar navbar-expand-lg bg-white navbar-light p-0">
                     <a href="" class="navbar-brand d-block d-lg-none">
-                        <h1 class="m-0 display-4 text-primary">Klean</h1>
+                        <h1 class="m-0 display-4 text-primary">ACE</h1>
                     </a>
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
@@ -93,58 +93,73 @@ $showError = false;
 $exists = false;
 
 if (isset($_POST['signup'])) {
-    include 'dbconnect.php';
-    $email = mysqli_real_escape_string($conn, $_POST["email"]);
-    echo $email;
-    $username = mysqli_real_escape_string($conn, $_POST["username"]);
-    $password = mysqli_real_escape_string($conn, $_POST["password"]);
-    $cpassword = mysqli_real_escape_string($conn, $_POST["cpassword"]);
+    include 'dbconnect.php'; // Assuming this file contains the database connection code
 
-    // Validate inputs (you can add more validation as needed)
-    if (empty($username) || empty($password) || empty($cpassword)) {
+    $email = $_POST["email"];
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+    $cpassword = $_POST["cpassword"];
+
+    // Validate inputs
+    if (empty($username) || empty($password) || empty($cpassword) || empty($email)) {
         $showError = "All fields are required";
     } elseif ($password != $cpassword) {
         $showError = "Passwords do not match";
     } else {
-        $sql = "SELECT * FROM users WHERE username='$username'";
-        $result = mysqli_query($conn, $sql);
-        $num = mysqli_num_rows($result);
+        // Check password strength
+        $passwordError = "";
+        if (strlen($password) < 8) {
+            $passwordError .= "Password must have at least 8 characters.\n";
+        }
+        if (!preg_match("#[A-Z]+#", $password)) {
+            $passwordError .= "Password must have at least one uppercase letter.\n";
+        }
+        if (!preg_match("#[a-z]+#", $password)) {
+            $passwordError .= "Password must have at least one lowercase letter.\n";
+        }
+        if (!preg_match("#[0-9]+#", $password)) {
+            $passwordError .= "Password must have at least one number.\n";
+        }
+        if (!preg_match("#[^\w]+#", $password)) {
+            $passwordError .= "Password must have at least one special character.\n";
+        }
 
-        if ($num == 0) {
-            $hash = password_hash($password, PASSWORD_DEFAULT);
-            $insertSql = "INSERT INTO `users` (`email`,`username`, `password`, `cpassword`,`date`) VALUES ('$email','$username', '$hash','$cpassword',current_timestamp())";
-            $insertResult = mysqli_query($conn, $insertSql);
-
-            if ($insertResult) {
-                $showAlert = true;
-            } else {
-                $showError = "Error inserting user into database".mysqli_error($conn);
-            }
+        if (!empty($passwordError)) {
+            $showError = $passwordError;
         } else {
-            $exists = "Username not available";
+            // Check if username already exists
+            $stmt = $conn->prepare("SELECT * FROM users WHERE username=?");
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $num = $result->num_rows;
+
+            if ($num > 0) {
+                $exists = "Username not available";
+            } else {
+                // Hash the password
+                $hash = password_hash($password, PASSWORD_DEFAULT);
+
+                // Insert user data into the database
+                $stmt = $conn->prepare("INSERT INTO users (email, username, password, date) VALUES (?, ?, ?, current_timestamp())");
+                $stmt->bind_param("sss", $email, $username, $hash);
+                if ($stmt->execute()) {
+                    $showAlert = true;
+                } else {
+                    $showError = "Error inserting user into database: " . $conn->error;
+                }
+            }
         }
     }
 
-    mysqli_close($conn);
+    // Close the database connection
+    $conn->close();
 }
 ?>
-	
-<!doctype html> 
-	
-<html lang="en"> 
 
-<head> 
-	
-	<!-- Required meta tags --> 
-	<meta charset="utf-8"> 
-	<meta name="viewport" content= 
-		"width=device-width, initial-scale=1, 
-		shrink-to-fit=no"> 
-	
-</head> 
-	
-<body> 
-	
+
+
+
 <?php 
 	
 	if($showAlert) { 
@@ -156,6 +171,9 @@ if (isset($_POST['signup'])) {
 			created and you can now login.
             
             <script>
+            
+            Your account has been  successfully  
+			created and you can now login.
                 location.replace("login.php?success");
                 </script> 
 			<button type="button" class="close"
@@ -193,6 +211,23 @@ if (isset($_POST['signup'])) {
 
 ?> 
 	
+	
+<!doctype html> 
+	
+<html lang="en"> 
+
+<head> 
+	
+	<!-- Required meta tags --> 
+	<meta charset="utf-8"> 
+	<meta name="viewport" content= 
+		"width=device-width, initial-scale=1, 
+		shrink-to-fit=no"> 
+	
+</head> 
+	
+<body> 
+
 <div class="container my-4 "> 
 	
 	<h1 class="text-center text-secondary">Signup Here</h1> 
@@ -212,34 +247,12 @@ if (isset($_POST['signup'])) {
 			name="email" aria-describedby="emailHelp" required>	 
 		</div> 
 	
+        
+
 		<div class="form-group"> 
 			<label for="password">Password</label> 
 			<input type="password" class="form-control"
-			id="password" placeholder="Password" name="password" required> 
-		
-        <div class="password_strength_box">
-            <div class="password_strength">
-                <p class="text">Weak</p>
-                <div class="line_box">
-                    <div class="line">
-
-                    </div>
-                </div>
-<div class="tool_tip_box">
-    <span>?</span>
-    <div class="tool_tip">
-<p><b></b>Password must be:</b></p>
-<p>Less than or equal to 16 characters</p>
-<p>At least 8 character long </p>
-<p>At least 1 uppercase letter </p>
-<p>At least 1 lowercase letter</p>
-<p>At least 1 special character</p>
-<p></p>
-    </div>
-</div>
-        </div>
-        
-        </div> 
+			id="password" placeholder="Enter Password" name="password" required> 
 	
 		<div class="form-group"> 
 			<label for="cpassword">Confirm Password</label> 

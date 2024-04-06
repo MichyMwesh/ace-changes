@@ -104,7 +104,7 @@ session_start();
                 </div>
                 <div class="col-12">
                   <label for="inputAddress2" class="form-label" >Phone Number</label>
-                  <input type="text" class="form-control" name="phone"  placeholder="Enter Phone Number">
+                  <input type="text" class="form-control" name="phone"  placeholder="Enter Phone Number/254">
                 </div>
              
                 <div class="col-12">

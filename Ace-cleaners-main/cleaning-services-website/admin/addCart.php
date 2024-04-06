@@ -36,7 +36,7 @@ session_start();
 
     if ($result) {
         // Set success message in session variable
-        $_SESSION['success_message'] = "Data has been submitted successfully!".mysqli_error($conne);
+        $_SESSION['success_message'] = "Data has been submitted &Added to Cart successfully!".mysqli_error($conne);
         echo "<script>alert('".$_SESSION['success_message']."');</script>";
         //echo mysqli_error($conne);
     } else {
@@ -47,6 +47,6 @@ session_start();
     
     // Redirect to index.php
     //header("Location: index.php");
-    echo "<script>location.replace('/ace-changes/Ace-cleaners-main/index.php');</script>";
+    echo "<script>location.replace('/Acecleaners/Ace-cleaners-main/cleaning-services-website/admin/index.php');</script>";
     exit(); // Ensure script stops here
 ?>
