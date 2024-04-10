@@ -172,8 +172,10 @@
                                     <a href="mailto:info@example.com"><i class="fa fa-envelope"></i>acecleaners@gmail.com</a>
                                 </div>
                                 <div class="topbar-col">
+                                    
                                     <!-- Cart icon with link to shopping cart page -->
                                     <a href="#" onClick='toggleCartDrawer()'><i class="fa fa-shopping-cart"></i> Cart</a>
+                                    <span style="color:red;background:green;padding:5px;border-radius:30px"><?php echo $result->num_rows; ?></span>
                                 </div>
                                 <div class="topbar-col">
                                     <div class="topbar-social">
