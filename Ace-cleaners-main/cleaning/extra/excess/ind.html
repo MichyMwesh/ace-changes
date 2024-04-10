@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fetch Notifications</title>
+</head>
+<body>
+    <button id="fetchNotifications">Fetch Notifications</button>
+    <div id="notifications"></div>
+
+    <script>
+        document.getElementById('fetchNotifications').addEventListener('click', async () => {
+            const userId = 'your_user_id'; // Replace with actual user ID
+            try {
+                const response = await fetch(`fetch_notifications.php?userId=${userId}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const notifications = await response.json();
+                displayNotifications(notifications);
+            } catch (error) {
+                console.error('There was a problem with your fetch operation:', error);
+            }
+        });
+
+        function displayNotifications(notifications) {
+            const notificationsDiv = document.getElementById('notifications');
+            notificationsDiv.innerHTML = '';
+            notifications.forEach(notification => {
+                const notificationElement = document.createElement('p');
+                notificationElement.textContent = notification.message; // Assuming 'message' is a field in your notifications table
+                notificationsDiv.appendChild(notificationElement);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+#addItemButton {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  #notificationIcon {
+    display: none; /* Initially hide the notification icon */
+    width: 20px;
+    height: 20px;
+    background-color: red; /* Change the color according to your design */
+    border-radius: 50%; /* Make it circular */
+  }
+  
