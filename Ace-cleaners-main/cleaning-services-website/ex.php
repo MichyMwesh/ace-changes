@@ -145,6 +145,9 @@ if (isset($_POST['signup'])) {
                 $stmt->bind_param("sss", $email, $username, $hash);
                 if ($stmt->execute()) {
                     $showAlert = true;
+                    ?>
+                    <script>alert("Signup successful"); </script>
+                    <?php
                 } else {
                     $showError = "Error inserting user into database: " . $conn->error;
                 }
