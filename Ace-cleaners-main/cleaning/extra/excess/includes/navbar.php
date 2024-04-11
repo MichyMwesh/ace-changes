@@ -87,8 +87,39 @@
 </li>
 
 
+<?php
+include("notifications/notifications/connection/DB.php");
+       $find_notifications = "Select * from inf where active = 1";
+       $result = mysqli_query($connection,$find_notifications);
+       $count_active = '';
+       $notifications_data = array(); 
+       $deactive_notifications_dump = array();
+        while($rows = mysqli_fetch_assoc($result)){
+                $count_active = mysqli_num_rows($result);
+                $notifications_data[] = array(
+                            "n_id" => $rows['n_id'],
+                            "notifications_name"=>$rows['notifications_name'],
+                            "message"=>$rows['message']
+                );
+        }
+        //only five specific posts
+        $deactive_notifications = "Select * from inf where active = 0 ORDER BY n_id DESC LIMIT 0,5";
+        $result = mysqli_query($connection,$deactive_notifications);
+        while($rows = mysqli_fetch_assoc($result)){
+          $deactive_notifications_dump[] = array(
+                      "n_id" => $rows['n_id'],
+                      "notifications_name"=>$rows['notifications_name'],
+                      "message"=>$rows['message']
+          );
+        }
 
+     ?>
+<li class="nav-item">
+  <a class="nav-link" href="notifications/notifications/index.php">
+  <i class="fas fa-bell"></i>
 
+    <span>Notifications</span>&nbsp<span style="color:red;background-color:green;border-radius:30px;padding:10px"><?php echo $count_active; ?></span></a> 
+</li>
 
 <li class="nav-item">
   <a class="nav-link" href="register.php">
@@ -158,6 +189,7 @@
             <!-- Nav Item - User Information -->
 
             <li class="nav-item dropdown no-arrow">
+              
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                   

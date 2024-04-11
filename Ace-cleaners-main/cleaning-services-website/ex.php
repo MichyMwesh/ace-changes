@@ -145,6 +145,13 @@ if (isset($_POST['signup'])) {
                 $stmt->bind_param("sss", $email, $username, $hash);
                 if ($stmt->execute()) {
                     $showAlert = true;
+                    include("DB.php");
+                        session_start();
+                        $notifications_name = "Signup";
+                        $message            =  "$email Booked successfully";
+
+                        $insert_query = "INSERT INTO inf(notifications_name,message,active)VALUES('".$notifications_name."','".$message."','1')";
+                        $result = mysqli_query($connection,$insert_query);
                     ?>
                     <script>alert("Signup successful"); </script>
                     <?php

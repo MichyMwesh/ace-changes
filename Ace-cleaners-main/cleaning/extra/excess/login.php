@@ -1,14 +1,11 @@
  <?php
-// Start the session
 session_start();
-
 // Check if the user is already logged in
-if (isset($_SESSION['admin_id'])) {
+/*if (isset($_SESSION['admin_id'])) {
     // Redirect to the main page or dashboard
-    header('Location: index.php');
+    echo "<script>location.replace('index.php');</script>";
     exit();
-}
-
+}*/
 include 'db.php'; 
 
 if(isset($_POST['login'])){
@@ -20,11 +17,11 @@ if(isset($_POST['login'])){
 
 
     // You should use prepared statements to prevent SQL injection
-    $query = "SELECT * FROM register WHERE username =? email = ? AND password = ?";
-    $stmt = mysqli_prepare($connection, $query);
-    mysqli_stmt_bind_param($stmt, "sss", $username, $email, $password);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
+    $query = "SELECT * FROM register WHERE username = ? AND email = ? AND password = ?";
+$stmt = mysqli_prepare($connection, $query);
+mysqli_stmt_bind_param($stmt, "sss", $username, $email, $password);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 
     // Check if the query returned any rows
     if(mysqli_num_rows($result) > 0){
@@ -35,7 +32,7 @@ if(isset($_POST['login'])){
         $_SESSION['admin_id'] = $user['admin_id'];
 
         // Redirect to wp.php after successful login
-        header('Location: index.php');
+        echo "<script>location.replace('index.php');</script>";
         exit(); // Terminate script execution after redirection
     }
     else{
@@ -77,7 +74,7 @@ if(isset($_POST['login'])){
         .card {
             border-radius: 8px;
             padding: 10% 10%;
-            box-shadow: 2px 2px 2px 2px gray;
+            boxsubmit-shadow: 2px 2px 2px 2px gray;
         }
         label{
             font-size: 150%;
@@ -108,7 +105,7 @@ if(isset($_POST['login'])){
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title text-center">Admin Login</h5>
-                        <form action="index.php" method="post">
+                        <form action="#" method="post">
 
                         <div class="py-3">
                                 <label for="">Username</label>
@@ -128,7 +125,7 @@ if(isset($_POST['login'])){
                             <div class="form_group">
                               <div class="g-recaptcha" data-sitekey="6LdVFZYpAAAAANPSensxyMxjoOJOYcFh8lcMbqwb"></div> <!-- Add reCAPTCHA widget here -->
                           </div>
-                            <button type="submit" name='submit' class="btn btn-primary btn-block my-3" style="padding: 20px 0; border-radius: 8px;">Login</button>
+                            <button type="submit" name='login' class="btn btn-primary btn-block my-3" style="padding: 20px 0; border-radius: 8px;">Login</button>
                         </form>
                     </div>
                 </div>

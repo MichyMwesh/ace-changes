@@ -6,9 +6,15 @@ require_once "PHPMailer/src/PHPMailer.php";
 require_once "PHPMailer/src/Exception.php";
 require_once "PHPMailer/src/SMTP.php";
 require_once"vendor/autoload.php";
+include("DB.php");
 session_start();
 $mail = new PHPMailer(true);
 $email=$_SESSION['email'];
+$notifications_name = "Bookings";
+$message            =  "$email Booked successfully";
+
+$insert_query = "INSERT INTO inf(notifications_name,message,active)VALUES('".$notifications_name."','".$message."','1')";
+$result = mysqli_query($connection,$insert_query);
 try {
 	$mail->SMTPOptions = array(
 		'ssl' => array(
